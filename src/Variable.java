@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+
 public class Variable extends CPU{
     
-    public Variable(int _timeQuantum, String _algoName){
-        super(_timeQuantum, _algoName);
+    public Variable(int _frames, int _timeQuantum, ArrayList<Process> _processList, String _algoName){
+        super(_timeQuantum, _algoName, _processList);
     }
 
     @Override
