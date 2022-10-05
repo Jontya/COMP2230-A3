@@ -21,6 +21,7 @@ public class Process implements Comparable<Process>{
         currInstruction++;
         if(currInstruction == pageInstructions.size()){
             timeFinished = time;
+            currStatus = "finished";
         }
     }
 
@@ -51,6 +52,13 @@ public class Process implements Comparable<Process>{
 
     public int getTimeFinished(){
         return timeFinished;
+    }
+
+    public boolean isFinished(){
+        if(currStatus.equals("finished")){
+            return true;
+        }
+        return false;
     }
 
     public String getFaultTimes(){
