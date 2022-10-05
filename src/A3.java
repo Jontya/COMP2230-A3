@@ -27,7 +27,7 @@ public class A3{
             processes.add(new Process(args[i], readFile(args[i])));
         }
 
-        Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), "Fixed-Local");
+        Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Fixed-Local");
         fixedCPU.run();
 
         //Variable variableCPU = new Variable();
