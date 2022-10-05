@@ -1,54 +1,58 @@
 import java.io.File;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class A3{
-    private static int frames;
-    private static int timeQuantum;
-    private static ArrayList<String> filenames;
-
-    public static void main (String[] args) throws Exception{
-        try{
-            // Runs the program
-            frames = Integer.parseInt(args[0]);
-            timeQuantum = Integer.parseInt(args[1]);
-
-            filenames = new ArrayList<>();
-            for(int i = 0; i < args.length - 2; i++){
-                filenames.add(args[i + 2]);
+    public static void main(String[] args) throws Exception{
+        if(args.length > 2){
+            for(int i = 2; i < args.length; i++){
+                File tempFile = new File(args[i]);
+                if(!tempFile.exists()){
+                    System.out.println("File Does Not Exist!");
+                    return;
+                }
             }
-
-            A3 a3 = new A3();
-            a3.run();
+            A3 A3 = new A3();
+            A3.run(args);
         }
-        catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Missing Arguments");
+        else{
+            System.out.println("Incorrect Command Line Arguments!");
+            return;
         }
     }
 
-    private void run() throws Exception{
+    private void run(String[] args) throws Exception{
         ArrayList<Process> processes = new ArrayList<>();
-        while(!filenames.isEmpty()){
-           processes.add(readFile(filenames.remove(0)));
+        for(int i = 2; i < args.length; i++){
+            processes.add(new Process(args[i], readFile(args[i])));
         }
+
+        Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), "Fixed-Local");
+        fixedCPU.run();
+
+        //Variable variableCPU = new Variable();
+        //variableCPU.run();
+
+        System.out.println(fixedCPU.getSimulationReport());
     }
 
-    private Process readFile(String processFile) throws Exception{
-        File file = new File(processFile);
-        if(!file.exists()){
-            System.out.println("File Not Found");
-            System.exit(0);
-        }
-
-        Scanner scanner = new Scanner(file);
+    private ArrayList<Integer> readFile(String filename) throws Exception{
+        ArrayList<Integer> pageInstructions = new ArrayList<>();
+        Scanner scanner = new Scanner(new File(filename));
         try{
-            
+            String next = "";
+            while(!next.equals("begin")){
+                next = scanner.next();
+            }
+            next = scanner.next();
+            while(!next.equals("end")){
+                pageInstructions.add(Integer.valueOf(next));
+                next = scanner.next();
+            }
         } 
         finally{
             scanner.close();
         }
-
-        return new Process(processFile);
-        
+        return pageInstructions;
     }
 }
