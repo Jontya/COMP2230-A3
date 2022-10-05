@@ -25,8 +25,13 @@ public abstract class CPU {
     }
 
     public void run(){
-        while(!processList.isEmpty()){
-            finishedList.add(processList.remove(0));
+        for(int i = 0; i < processList.size(); i++){
+            readyQueue.add(processList.get(i));
+        }
+
+        // Round Robin Scheduling Algorithm
+        while(finishedList.size() != processList.size()){
+            
         }
     }
 
