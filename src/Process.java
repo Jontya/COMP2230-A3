@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Process {
+public class Process implements Comparable<Process>{
     private String processName;
     private String currStatus;
     private int timeFinished;
@@ -65,6 +65,14 @@ public class Process {
     public int getProcessID(){
         String[] temp = processName.split("\\.");
         return Character.getNumericValue((temp[0].charAt(temp[0].length() - 1)));
+    }
+
+    @Override
+    public int compareTo(Process process) {
+        if(getProcessID() > process.getProcessID()){
+            return 1;
+        }
+        return -1;
     }
 
 }
