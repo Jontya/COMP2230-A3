@@ -56,6 +56,8 @@ public abstract class CPU {
 
     protected abstract void addToMainMem(Page page);
 
-    protected abstract void checkInMainMem(Process process);
+    protected abstract boolean checkInMainMem(Process process);
+
+    protected abstract void removeProcessFromMemory(Process process);
 
 }
