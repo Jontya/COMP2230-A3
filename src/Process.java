@@ -1,28 +1,22 @@
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Process implements Comparable<Process>{
     private String processName;
     private String currStatus;
+    private int blockedTime;
     private int timeFinished;
     private int currInstruction;
-    private ArrayList<Integer> pageInstructions;
+    private Queue<Integer> pageInstructions;
     private ArrayList<Integer> pageFaults;
 
-    public Process(String _processName, ArrayList<Integer> _pageInstructions){
+    public Process(String _processName, Queue<Integer> _pageInstructions){
         processName = _processName;
         currInstruction = 0;
         timeFinished = 0;
         currStatus = "ready";
         pageInstructions = _pageInstructions;
         pageFaults = new ArrayList<>();
-    }
-
-    public void nextInstruction(int time){
-        currInstruction++;
-        if(currInstruction == pageInstructions.size()){
-            timeFinished = time;
-            currStatus = "finished";
-        }
     }
 
     public String getStatus(){
@@ -49,12 +43,27 @@ public class Process implements Comparable<Process>{
         return currInstruction;
     }
 
+    public int getBlockedTime(){
+        return blockedTime;
+    }
+
+    public void setBlockedTime(int time){
+        blockedTime = time;
+    }
+
     public void nextInstruction(){
-        currInstruction = pageInstructions.remove(0);
+        if(!pageInstructions.isEmpty()){
+            if(currStatus.equals("blocked")){
+                currStatus = "ready";
+            }
+            else{
+                currInstruction = pageInstructions.remove();
+            }
+        }
     }
 
     public boolean isFinished(){
-        if(currStatus.equals("finished")){
+        if(pageInstructions.size() == 0){
             return true;
         }
         return false;
@@ -72,7 +81,12 @@ public class Process implements Comparable<Process>{
     public String getFaultTimes(){
         String out = "{";
         for(int i = 0; i < pageFaults.size(); i++){
-            out += Integer.toString(pageFaults.get(i));
+            if((i + 1) != pageFaults.size()){
+                out += Integer.toString(pageFaults.get(i)) + ", ";
+            }
+            else{
+                out += Integer.toString(pageFaults.get(i));
+            }
         }
         out += "}";
         return out;
