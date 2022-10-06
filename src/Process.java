@@ -29,15 +29,6 @@ public class Process implements Comparable<Process>{
         return currStatus;
     }
 
-    public void swapStatus(){
-        if(currStatus.equals("ready")){
-            currStatus = "blocked";
-        }
-        else{
-            currStatus = "ready";
-        }
-    }
-
     public void newFault(int time){
         pageFaults.add(time);
     }
@@ -54,11 +45,28 @@ public class Process implements Comparable<Process>{
         return timeFinished;
     }
 
+    public int getCurrentInstruction(){
+        return currInstruction;
+    }
+
+    public void nextInstruction(){
+        currInstruction = pageInstructions.remove(0);
+    }
+
     public boolean isFinished(){
         if(currStatus.equals("finished")){
             return true;
         }
         return false;
+    }
+
+    public void swapStatus(){
+        if(currStatus.equals("ready")){
+            currStatus = "blocked";
+        }
+        else{
+            currStatus = "ready";
+        }
     }
 
     public String getFaultTimes(){
