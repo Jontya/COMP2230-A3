@@ -1,17 +1,25 @@
 public class Page {
-    private int pageID;
-    private String processName;
+    private int pageInstruction;
+    private int referenceCounter;
 
-    public Page(int _pageID, String _processName){
-        pageID = _pageID;
-        processName  = _processName;
+    public Page(int _pageInstruction){
+        pageInstruction = _pageInstruction;
+        referenceCounter = 0;
     }
 
-    public int getPageID(){
-        return pageID;
+    public int getpageInstruction(){
+        return pageInstruction;
     }
 
-    public String getProcessName(){
-        return processName;
+    public int getReferenceCounter(){
+        return referenceCounter;
+    }
+
+    public void decReferenceCounter(){
+        referenceCounter--;
+    }
+
+    public void incReferenceCounter(){
+        referenceCounter++;
     }
 }
