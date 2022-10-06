@@ -11,7 +11,13 @@ public class Variable extends CPU{
     }
 
     @Override
-    protected void checkInMainMem(Process process) {
+    protected boolean checkInMainMem(Process process) {
+        return false;
+    }
+
+    @Override
+    protected void removeProcessFromMemory(Process process) {
+        // TODO Auto-generated method stub
         
     }
 }
