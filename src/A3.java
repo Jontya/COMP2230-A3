@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class A3{
@@ -28,6 +30,7 @@ public class A3{
         }
 
         Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Fixed-Local");
+        fixedCPU.primeReadyQueue();
         fixedCPU.run();
 
         //Variable variableCPU = new Variable();
@@ -36,8 +39,8 @@ public class A3{
         System.out.println(fixedCPU.getSimulationReport());
     }
 
-    private ArrayList<Integer> readFile(String filename) throws Exception{
-        ArrayList<Integer> pageInstructions = new ArrayList<>();
+    private Queue<Integer> readFile(String filename) throws Exception{
+        Queue<Integer> pageInstructions = new LinkedList<>();
         Scanner scanner = new Scanner(new File(filename));
         try{
             String next = "";
