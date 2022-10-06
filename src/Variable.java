@@ -6,17 +6,19 @@ public class Variable extends CPU{
     }
 
     @Override
-    protected void addToMainMem(Page page) {
-
+    protected void loadIntoMemory() {
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
-    protected boolean checkInMainMem(Process process) {
+    protected boolean checkMemory() {
+        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    protected void removeProcessFromMemory(Process process) {
+    protected void removeFromMemory() {
         // TODO Auto-generated method stub
         
     }
