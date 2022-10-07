@@ -3,11 +3,13 @@ import java.util.HashMap;
 
 public class Fixed extends CPU{
     private int numAllocatedFrames;
-    protected HashMap<String, ArrayList<Page>> mainMemory;
+    private int currPointer;
+    private HashMap<String, ArrayList<Page>> mainMemory;
 
     public Fixed(int _frames, int _timeQuantum, ArrayList<Process> _processList, String _algoName){
         super(_timeQuantum, _algoName, _processList);
 
+        currPointer = 0;
         mainMemory = new HashMap<>();
         numAllocatedFrames = _frames / processList.size();
     }
@@ -28,16 +30,19 @@ public class Fixed extends CPU{
             ArrayList<Page> temp = mainMemory.get(currProcess.getProcessName());
             boolean replaced = false;
             while(!replaced){
-                for(int i = 0; i < temp.size(); i++){
-                    if(temp.get(i).getReferenceCounter() == 0){
-                        temp.remove(i);
-                        temp.add(new Page(currProcess.getCurrentInstruction())); 
-                        replaced = true;
-                        break;
-                    }
-                    else{
-                        temp.get(i).decReferenceCounter();
-                    }
+                if(temp.get(currPointer).getReferenceCounter() == 0){
+                    temp.set(currPointer, new Page(currProcess.getCurrentInstruction()));
+                    replaced = true;
+                }
+                else{
+                    temp.get(currPointer).decReferenceCounter();
+                }
+
+                if(currPointer == temp.size() - 1){
+                    currPointer = 0;
+                }
+                else{
+                    currPointer++;
                 }
             }
             mainMemory.replace(currProcess.getProcessName(), temp);
