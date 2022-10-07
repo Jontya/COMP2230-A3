@@ -2,68 +2,67 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 public class Process implements Comparable<Process>{
+    private Queue<Integer> processInstructions;
+    private ArrayList<Integer> pageFaults;
+    private int currInstruction;
     private String processName;
     private String currStatus;
-    private int blockedTime;
     private int timeFinished;
-    private int currInstruction;
-    private Queue<Integer> pageInstructions;
-    private ArrayList<Integer> pageFaults;
+    private int nextEvent;
 
     public Process(String _processName, Queue<Integer> _pageInstructions){
+        processInstructions = _pageInstructions;
+        pageFaults = new ArrayList<>();
         processName = _processName;
+        currStatus = "ready";
         currInstruction = 0;
         timeFinished = 0;
-        currStatus = "ready";
-        pageInstructions = _pageInstructions;
-        pageFaults = new ArrayList<>();
+        nextEvent = 0;
     }
 
-    public String getStatus(){
+    public String getProcessStatus(){
         return currStatus;
     }
 
-    public void newFault(int time){
+    public void addNewPageFault(int time){
         pageFaults.add(time);
+    }
+
+    public int getPageFaultCount(){
+        return pageFaults.size();
     }
 
     public String getProcessName(){
         return processName;
     }
 
-    public int getNumFaults(){
-        return pageFaults.size();
-    }
 
     public int getTimeFinished(){
         return timeFinished;
+    }
+
+    public void setFinishedTime(int _timeFinished){
+        timeFinished = _timeFinished;
     }
 
     public int getCurrentInstruction(){
         return currInstruction;
     }
 
-    public int getBlockedTime(){
-        return blockedTime;
+    public int getNextEvent(){
+        return nextEvent;
     }
 
-    public void setBlockedTime(int time){
-        blockedTime = time;
+    public void setNextEvent(int time){
+        nextEvent = time;
     }
 
     public void nextInstruction(){
-        if(!pageInstructions.isEmpty()){
-            if(currStatus.equals("blocked")){
-                currStatus = "ready";
-            }
-            else{
-                currInstruction = pageInstructions.remove();
-            }
-        }
+        currInstruction = processInstructions.remove();
     }
 
     public boolean isFinished(){
-        if(pageInstructions.size() == 0){
+        if(processInstructions.isEmpty()){
             return true;
         }
         return false;
