@@ -30,8 +30,10 @@ public abstract class CPU {
                 if(blockedQueue.isEmpty()){
                     return;
                 }
+
                 currTime = blockedQueue.peek().getNextEvent();
                 checkBlockedQueue();
+                
             }
 
             currProcess = readyQueue.remove();
