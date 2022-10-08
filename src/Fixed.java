@@ -38,11 +38,13 @@ public class Fixed extends CPU{
                     temp.get(currPointer).decReferenceCounter();
                 }
 
-                if(currPointer == temp.size() - 1){
-                    currPointer = 0;
-                }
-                else{
-                    currPointer++;
+                if(!replaced){
+                    if(currPointer == temp.size() - 1){
+                        currPointer = 0;
+                    }
+                    else{
+                        currPointer++;
+                    }
                 }
             }
             mainMemory.replace(currProcess.getProcessName(), temp);
