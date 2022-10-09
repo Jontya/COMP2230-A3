@@ -9,6 +9,7 @@ public abstract class CPU {
     protected String algoName;
     protected int timeQuantum;
     protected Process currProcess;
+    protected int currClockPointer;
     protected Queue<Process> readyQueue;
     protected Queue<Process> blockedQueue;
     protected ArrayList<Process> processList;
@@ -16,6 +17,7 @@ public abstract class CPU {
 
     public CPU (int _timeQuantum, String _algoName, ArrayList<Process> _processList){
         currTime = 0;
+        currClockPointer = 0;
         algoName = _algoName;
         timeQuantum = _timeQuantum;
         processList = _processList;
@@ -25,6 +27,7 @@ public abstract class CPU {
     }
 
     public void run(){
+        primeReadyQueue();
         while(finishedList.size() != processList.size()){
             if(readyQueue.isEmpty()){
                 if(blockedQueue.isEmpty()){
@@ -33,7 +36,6 @@ public abstract class CPU {
 
                 currTime = blockedQueue.peek().getNextEvent();
                 checkBlockedQueue();
-                
             }
 
             currProcess = readyQueue.remove();
@@ -62,6 +64,7 @@ public abstract class CPU {
                 if(currProcess.isFinished()){
                     currProcess.setFinishedTime(currTime);
                     finishedList.add(currProcess);
+                    removeFromMemory();
                     break;
                 }
                 else{
@@ -93,14 +96,6 @@ public abstract class CPU {
         }
     }
 
-    protected abstract void loadIntoMemory();
-
-    protected abstract boolean checkMemory();
-
-    protected abstract void removeFromMemory();
-
-
-    
     public String getSimulationReport(){
         String out =  "GCLOCK - " + algoName + " Replacement:\n";
         out += "PID  Process Name      Turnaround Time  # Faults  Fault Times\n";
@@ -111,4 +106,11 @@ public abstract class CPU {
         return out;
     }
 
+    protected abstract void primeReadyQueue();
+
+    protected abstract boolean checkMemory();
+
+    protected abstract void loadIntoMemory();
+
+    protected abstract void removeFromMemory();
 }
