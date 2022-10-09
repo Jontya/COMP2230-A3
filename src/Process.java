@@ -4,6 +4,7 @@ import java.util.Queue;
 public class Process implements Comparable<Process>{
     private Queue<Integer> processInstructions;
     private ArrayList<Integer> pageFaults;
+    private int pageCount;
     private int currInstruction;
     private String processName;
     private String currStatus;
@@ -12,6 +13,7 @@ public class Process implements Comparable<Process>{
 
     public Process(String _processName, Queue<Integer> _pageInstructions){
         processInstructions = _pageInstructions;
+        pageCount = processInstructions.size();
         pageFaults = new ArrayList<>();
         processName = _processName;
         currStatus = "ready";
@@ -36,6 +38,9 @@ public class Process implements Comparable<Process>{
         return processName;
     }
 
+    public int getPageCount(){
+        return pageFaults.size();
+    }
 
     public int getTimeFinished(){
         return timeFinished;
