@@ -29,14 +29,14 @@ public class A3{
             processes.add(new Process(args[i], readFile(args[i])));
         }
 
-        Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Fixed-Local");
-        fixedCPU.primeReadyQueue();
-        fixedCPU.run();
+        //Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Fixed-Local");
+        //fixedCPU.run();
 
-        //Variable variableCPU = new Variable();
-        //variableCPU.run();
+        Variable variableCPU = new Variable(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Variable-Global");
+        variableCPU.run();
 
-        System.out.println(fixedCPU.getSimulationReport());
+        //System.out.println(fixedCPU.getSimulationReport());
+        System.out.println(variableCPU.getSimulationReport());
     }
 
     private Queue<Integer> readFile(String filename) throws Exception{
