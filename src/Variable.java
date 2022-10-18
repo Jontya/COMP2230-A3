@@ -32,11 +32,10 @@ public class Variable extends CPU{
     @Override
     protected boolean checkMemory() {
         if(mainMemory.checkBuffer(currProcess)){
-           return true; 
+            return true;
         }
         return false;
     }
-
 
     @Override
     protected void removeFromMemory() {
