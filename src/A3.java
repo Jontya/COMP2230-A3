@@ -24,18 +24,20 @@ public class A3{
     }
 
     private void run(String[] args) throws Exception{
-        ArrayList<Process> processes = new ArrayList<>();
+        ArrayList<Process> fixedProcesses = new ArrayList<>();
+        ArrayList<Process> variableProcesses = new ArrayList<>();
         for(int i = 2; i < args.length; i++){
-            processes.add(new Process(args[i], readFile(args[i])));
+            fixedProcesses.add(new Process(args[i], readFile(args[i])));
+            variableProcesses.add(new Process(args[i], readFile(args[i])));
         }
 
-        //Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Fixed-Local");
-        //fixedCPU.run();
+        Fixed fixedCPU = new Fixed(Integer.valueOf(args[0]), Integer.valueOf(args[1]), fixedProcesses, "Fixed-Local");
+        fixedCPU.run();
 
-        Variable variableCPU = new Variable(Integer.valueOf(args[0]), Integer.valueOf(args[1]), processes, "Variable-Global");
+        Variable variableCPU = new Variable(Integer.valueOf(args[0]), Integer.valueOf(args[1]), variableProcesses, "Variable-Global");
         variableCPU.run();
 
-        //System.out.println(fixedCPU.getSimulationReport());
+        System.out.println(fixedCPU.getSimulationReport());
         System.out.println(variableCPU.getSimulationReport());
     }
 
