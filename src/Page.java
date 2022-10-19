@@ -1,3 +1,13 @@
+//---------------------------------------------------------------------------------------------------
+/** COMP2240 A3
+*** Jonty Atkinson (C3391110)
+*** 19/10/22
+***
+*** Page:
+*** Contains the basic implementation for a page which will be stored in the GCLOCK class
+**/
+//---------------------------------------------------------------------------------------------------
+
 public class Page { 
     private String processName;
     private int pageInstruction;
@@ -10,12 +20,14 @@ public class Page {
         firstRef = false;
     }
 
+    // Constructor
     public Page(int _pageInstruction, String _processName){
         pageInstruction = _pageInstruction;
         referenceCounter = 0;
         processName = _processName;
     }
 
+    // Getters / Setters
     public int getpageInstruction(){
         return pageInstruction;
     }

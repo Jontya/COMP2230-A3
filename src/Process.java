@@ -1,3 +1,14 @@
+//---------------------------------------------------------------------------------------------------
+/** COMP2240 A3
+*** Jonty Atkinson (C3391110)
+*** 19/10/22
+***
+*** Process:
+*** Provided functionality used by the ready queue, finished queue, blocked queue and round 
+*** robin algorithm in the CPU class
+**/
+//---------------------------------------------------------------------------------------------------
+
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -20,6 +31,7 @@ public class Process implements Comparable<Process>{
         nextEvent = 0;
     }
 
+    // Getters / Setters
     public String getProcessStatus(){
         return currStatus;
     }
@@ -64,6 +76,7 @@ public class Process implements Comparable<Process>{
         currInstruction = processInstructions.remove();
     }
 
+    // Check if the process is finished
     public boolean isFinished(){
         if(processInstructions.isEmpty()){
             return true;
@@ -71,6 +84,7 @@ public class Process implements Comparable<Process>{
         return false;
     }
 
+    // Swaps the process status
     public void swapStatus(){
         if(currStatus.equals("ready")){
             currStatus = "blocked";
@@ -80,6 +94,7 @@ public class Process implements Comparable<Process>{
         }
     }
 
+    // Returns a string with all the page fault time (Used in the stat reporter)
     public String getFaultTimes(){
         String out = "{";
         for(int i = 0; i < pageFaults.size(); i++){
@@ -94,11 +109,14 @@ public class Process implements Comparable<Process>{
         return out;
     }
 
+    // Gets the processID (Numbers at the end of a process file)
     public int getProcessID(){
         String[] temp = processName.split("\\.");
-        return Character.getNumericValue((temp[0].charAt(temp[0].length() - 1)));
+        String[] id = temp[0].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        return Character.getNumericValue((id[1].charAt(id[1].length() - 1)));
     }
 
+    // Compare Method used by the finished queue in CPU
     @Override
     public int compareTo(Process process) {
         if(getProcessID() > process.getProcessID()){
