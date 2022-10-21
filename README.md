@@ -6,7 +6,7 @@ Simulates a system with a finite ammount of memory. Processes and process instru
 
 ### Running Program
 ``` javac A3.java ```
-``` java A3 "frames" "timeQuantum" "process" ...
+``` java A3 "frames" "timeQuantum" "process" ... ```
 
 "frames" is the number of frames the system will have in memory
 "timeQuantum" is the time quantum used by the Round Robin scheduling algorithm
