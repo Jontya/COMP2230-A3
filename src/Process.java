@@ -110,16 +110,16 @@ public class Process implements Comparable<Process>{
     }
 
     // Gets the processID (Numbers at the end of a process file)
-    public int getProcessID(){
+    public String getProcessID(){
         String[] temp = processName.split("\\.");
-        String[] id = temp[0].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-        return Character.getNumericValue((id[1].charAt(id[1].length() - 1)));
+        String filename = temp[temp.length - 2];
+        return Character.toString(filename.charAt(filename.length() - 1));
     }
 
     // Compare Method used by the finished queue in CPU
     @Override
     public int compareTo(Process process) {
-        if(getProcessID() > process.getProcessID()){
+        if(getProcessID().compareTo(process.getProcessID()) > 0){
             return 1;
         }
         return -1;
