@@ -130,7 +130,7 @@ public abstract class CPU {
         out += "PID  Process Name      Turnaround Time  # Faults  Fault Times\n";
         while(!finishedList.isEmpty()){
             Process temp = finishedList.remove();
-            out += String.format("%-4d %-17s %-16d %-9d %-4s", temp.getProcessID(), temp.getProcessName(), temp.getTimeFinished(), temp.getPageFaultCount(), temp.getFaultTimes()) + "\n";
+            out += String.format("%-4s %-17s %-16d %-9d %-4s", temp.getProcessID(), temp.getProcessName(), temp.getTimeFinished(), temp.getPageFaultCount(), temp.getFaultTimes()) + "\n";
         }
         return out;
     }
